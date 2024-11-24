@@ -7,6 +7,6 @@ authRouter.post("/register", ctrl.Register);
 authRouter.post("/resend_otp", ctrl.ResendOTP);
 authRouter.post("/verify", ctrl.VerifyEmail);
 authRouter.post("/login", ctrl.Login);
-authRouter.get("/me", authMiddleWare, ctrl.LoggedUsers);
+authRouter.get("/userData", authMiddleWare, ctrl.LoggedUsers);
 
 module.exports = authRouter;
