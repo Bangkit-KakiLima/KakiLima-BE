@@ -41,6 +41,14 @@ User.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    role: {
+      type: DataTypes.ENUM("seller", "buyer"),
+      allowNull: false,
+    },
   },
   {
     sequelize,

@@ -34,6 +34,14 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+      address: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      role: {
+        type: Sequelize.ENUM("seller", "buyer"),
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

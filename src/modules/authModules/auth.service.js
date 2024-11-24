@@ -7,6 +7,7 @@ const Register = async ({
   otp_code,
   otp_expiration,
   is_verified,
+  role,
 }) => {
   try {
     const existingUser = await model.findOne({ where: { email } });
@@ -22,6 +23,7 @@ const Register = async ({
       otp_code,
       otp_expiration,
       is_verified,
+      role,
     });
 
     return newUser;
@@ -93,4 +95,9 @@ const VerifyEmail = async ({ email, otp_code }) => {
   }
 };
 
-module.exports = { Register, ResendOTP, EmailExists, VerifyEmail };
+module.exports = {
+  Register,
+  ResendOTP,
+  EmailExists,
+  VerifyEmail,
+};
