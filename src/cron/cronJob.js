@@ -12,7 +12,7 @@ const pool = new Pool({
 
 async function fetchMerchantIds() {
   try {
-    const result = await pool.query('SELECT merchant_id FROM "Merchants";');
+    const result = await pool.query('SELECT merchant_id FROM "Locations";');
     return result.rows.map((row) => row.merchant_id);
   } catch (error) {
     console.error("Error fetching merchant IDs:", error);
@@ -59,7 +59,7 @@ async function updateLocation(id, latitude, longitude) {
 
 
 function startCronJob() {
-  cron.schedule("*/30 * * * *", async () => {
+  cron.schedule("*/1 * * * *", async () => {
     console.log("Cron job started at:", new Date().toISOString());
     const merchantIds = await fetchMerchantIds();
     if (merchantIds.length === 0) {
