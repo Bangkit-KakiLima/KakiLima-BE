@@ -37,7 +37,7 @@ module.exports = {
     ];
 
     const merchantRecords = merchants.map((merchant) => ({
-      merchant_id: uuidv4(),
+      user_id: '1',
       business_name: merchant.name,
       average_rating: merchant.rating,
       status: Math.random() > 0.5 ? 'active' : 'inactive',
