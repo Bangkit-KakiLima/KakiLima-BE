@@ -96,10 +96,10 @@ const VerifyEmail = async ({ email, otp_code }) => {
   }
 };
 
-const userData = async ({ id }) => {
+const UserData = async ({ id }) => {
   const user = await User.findOne({
     where: { id: id },
-    attributes: { exclude: ["password"] },
+    attributes: { exclude: ["password", "otp_code", "otp_expiration"] },
   });
 
   if (!user) {
@@ -109,10 +109,33 @@ const userData = async ({ id }) => {
   return user;
 };
 
+const ResetPasswordWithOTP = async ({ email, otp_code, newPassword }) => {
+  const user = await User.findOne({ where: { email } });
+
+  if (!user) {
+    const error = new Error("Email not found");
+    error.status = 404;
+    throw error;
+  }
+
+  if (user.otp_code !== otp_code || Date.now() > user.otp_expiration) {
+    const error = new Error("Incorrect or expired OTP");
+    error.status = 400;
+    throw error;
+  }
+  user.password = newPassword;
+  user.otp_code = null;
+  user.otp_expiration = null;
+  await user.save();
+
+  return { message: "Password reset successful" };
+};
+
 module.exports = {
   Register,
   ResendOTP,
   EmailExists,
   VerifyEmail,
-  userData,
+  UserData,
+  ResetPasswordWithOTP,
 };

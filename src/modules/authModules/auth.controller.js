@@ -31,9 +31,8 @@ const Register = async (req, res, next) => {
     const subject = "KakiLima Email Verification";
     const message = `Your OTP code is: ${otp}`;
 
-    sendEmail(queries.email, subject, message);
-
     const result = await service.Register(queries);
+    sendEmail(queries.email, subject, message);
 
     res
       .status(201)
@@ -55,7 +54,7 @@ const ResendOTP = async (req, res, next) => {
       otp_expiration: new Date(Date.now() + 10 * 60 * 1000),
     };
 
-    const subject = "Email Verification";
+    const subject = "Email Resend OTP";
     const message = `Your OTP code is: ${otp}`;
     var EmailExists = await service.EmailExists(queries);
 
@@ -67,9 +66,13 @@ const ResendOTP = async (req, res, next) => {
 
     const result = await service.ResendOTP(queries);
 
-    res
-      .status(200)
-      .send({ success: true, message: "OTP is resent", result: result });
+    res.status(200).send({
+      success: true,
+      message: "OTP is resent",
+      email: result.email,
+      result: result.otp_code,
+      otp_expiration: result.otp_expiration,
+    });
   } catch (error) {
     console.log(error);
     next(error);
@@ -80,7 +83,6 @@ const VerifyEmail = async (req, res, next) => {
   try {
     const { email, otp_code } = req.body;
 
-    // Pastikan email ada di database
     const EmailExists = await service.EmailExists({ email });
     if (!EmailExists) {
       return res
@@ -102,7 +104,10 @@ const VerifyEmail = async (req, res, next) => {
         .send({ success: false, message: "OTP is invalid" });
     }
 
-    // Kirim respons berhasil
+    user.otp_code = null;
+    user.otp_expiration = null;
+    await user.save();
+
     return res.status(200).send({
       success: true,
       message: "Email is verified",
@@ -167,17 +172,48 @@ const Login = async (req, res, next) => {
 
 const LoggedUsers = async (req, res, next) => {
   try {
-    const { id } = req.user; // Ambil id dari req.user
-    const user = await service.userData({ id }); // Panggil service dengan await
+    const { id } = req.user;
+    const user = await service.UserData({ id });
 
     res.status(200).json({ success: true, message: "User found", user });
   } catch (error) {
     console.error(error);
-    res.status(404).json({
-      success: false,
-      message: error.message || "Something went wrong",
-    });
+    next(error);
   }
 };
 
-module.exports = { Register, ResendOTP, VerifyEmail, Login, LoggedUsers };
+const ResetPasswordWithOTP = async (req, res, next) => {
+  try {
+    const { email, otp_code, newPassword } = req.body;
+
+    if (!email || !otp_code || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Email, OTP, and new password are required",
+      });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+
+    const query = {
+      email: email,
+      otp_code: otp_code,
+      newPassword: await bcrypt.hash(newPassword, salt),
+    };
+    const result = await service.ResetPasswordWithOTP(query);
+
+    res.status(200).json({ success: true, message: result.message });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+module.exports = {
+  Register,
+  ResendOTP,
+  VerifyEmail,
+  Login,
+  LoggedUsers,
+  ResetPasswordWithOTP,
+};
