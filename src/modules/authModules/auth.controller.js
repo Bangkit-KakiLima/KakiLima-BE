@@ -4,7 +4,6 @@ const generateOTP = require("../../utils/otp.generator");
 const { sendEmail } = require("../../utils/nodemailer");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../../../database/models/user");
 
 const Register = async (req, res, next) => {
   try {
@@ -168,22 +167,15 @@ const Login = async (req, res, next) => {
 
 const LoggedUsers = async (req, res, next) => {
   try {
-    const user = await User.findOne({
-      where: { id: req.user.id },
-      attributes: { exclude: ["password"] },
-    });
-
-    if (!user) {
-      return res.status(404).json({ success: false, msg: "User not found" });
-    }
+    const { id } = req.user; // Ambil id dari req.user
+    const user = await service.userData({ id }); // Panggil service dengan await
 
     res.status(200).json({ success: true, message: "User found", user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
+    res.status(404).json({
       success: false,
-      message: "Something went wrong",
-      error: error.message,
+      message: error.message || "Something went wrong",
     });
   }
 };

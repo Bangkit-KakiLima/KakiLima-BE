@@ -1,4 +1,5 @@
-const model = require("../../../database/models/user");
+const db = require("../../../database/models");
+const { User } = db;
 
 const Register = async ({
   username,
@@ -10,13 +11,13 @@ const Register = async ({
   role,
 }) => {
   try {
-    const existingUser = await model.findOne({ where: { email } });
+    const existingUser = await User.findOne({ where: { email } });
 
     if (existingUser) {
       throw new Error("Email is already registered");
     }
 
-    const newUser = await model.create({
+    const newUser = await User.create({
       username,
       email,
       password,
@@ -35,7 +36,7 @@ const Register = async ({
 const ResendOTP = async ({ email, otp_code, otp_expiration }) => {
   try {
     try {
-      const [affectedRows, user] = await model.update(
+      const [affectedRows, user] = await User.update(
         { otp_code, otp_expiration },
         {
           where: {
@@ -58,7 +59,7 @@ const ResendOTP = async ({ email, otp_code, otp_expiration }) => {
 
 const EmailExists = async ({ email }) => {
   try {
-    const data = await model.findOne({ where: { email: email } });
+    const data = await User.findOne({ where: { email: email } });
     return data;
   } catch (error) {
     throw error;
@@ -67,7 +68,7 @@ const EmailExists = async ({ email }) => {
 
 const VerifyEmail = async ({ email, otp_code }) => {
   try {
-    const user = await model.findOne({
+    const user = await User.findOne({
       where: { email: email, otp_code: otp_code },
     });
 
@@ -79,7 +80,7 @@ const VerifyEmail = async ({ email, otp_code }) => {
     const alreadyVerified = user.is_verified === true;
     if (alreadyVerified) throw new Error("Email is already verified");
 
-    await model.update(
+    await User.update(
       { is_verified: true },
       {
         where: {
@@ -88,11 +89,24 @@ const VerifyEmail = async ({ email, otp_code }) => {
       }
     );
 
-    const updatedData = await model.findOne({ where: { email: email } });
+    const updatedData = await User.findOne({ where: { email: email } });
     return updatedData;
   } catch (error) {
     throw error;
   }
+};
+
+const userData = async ({ id }) => {
+  const user = await User.findOne({
+    where: { id: id },
+    attributes: { exclude: ["password"] },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
 };
 
 module.exports = {
@@ -100,4 +114,5 @@ module.exports = {
   ResendOTP,
   EmailExists,
   VerifyEmail,
+  userData,
 };
