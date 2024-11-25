@@ -10,12 +10,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       merchant_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
 	unique: true,
         allowNull: false,
         references: {
           model: 'Merchants',
-          key: 'merchant_id'
+          key: 'id'
         },
 	onDelete: 'CASCADE',
       },

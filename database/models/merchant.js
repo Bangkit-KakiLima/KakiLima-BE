@@ -4,19 +4,26 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Merchant extends Model {
     static associate(models) {
-      Merchant.hasMany(models.Location, {
+      Merchant.belongsTo(models.User, {
+        foreignKey: 'user_id',
+        as: 'user',
+      });
+      Merchant.hasOne(models.Location, {
         foreignKey: 'merchant_id',
-        sourceKey: 'merchant_id',
         as: 'location'
       });
     }
   }
 
   Merchant.init({
-    merchant_id: {
-      type: DataTypes.STRING,
+    user_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true
+      unique: false,
+      references: {
+	model: 'Users',
+	key: 'id',
+      },
     },
     business_name: {
       type: DataTypes.STRING,
