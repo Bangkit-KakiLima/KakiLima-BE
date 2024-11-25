@@ -36,7 +36,7 @@ function generateRandomCoordinates() {
 
 async function updateLocation(id, latitude, longitude) {
   try {
-    const apiUrl = `http://13.229.216.9:80/api/locations/${id}`;
+    const apiUrl = `http://13.229.216.9:80/api/locations/${id}`; //TODO: Change with your instance or localhost hehe
     const response = await axios.put(
       apiUrl,
       {
@@ -59,7 +59,7 @@ async function updateLocation(id, latitude, longitude) {
 
 
 function startCronJob() {
-  cron.schedule("*/1 * * * *", async () => {
+  cron.schedule("*/20 * * * *", async () => {
     console.log("Cron job started at:", new Date().toISOString());
     const merchantIds = await fetchMerchantIds();
     if (merchantIds.length === 0) {
