@@ -1,5 +1,5 @@
-const Location = require('../../../database/models/location');
-const Merchant = require('../../../database/models/merchant');
+const db = require('../../../database/models');
+const { Location, Merchant } = db;
 
 const createLocation = async ({ merchant_id, latitude, longitude }) => {
   try {
@@ -14,6 +14,27 @@ const createLocation = async ({ merchant_id, latitude, longitude }) => {
 
     return location;
   } catch (error) {
+    throw error;
+  }
+};
+
+const getAllLocations = async () => {
+  try {
+    console.log('Models available:', Object.keys(db));
+
+    const locations = await Location.findAll({
+      include: [{
+        model: Merchant,
+        as: 'merchant',
+        required: false
+      }],
+      logging: console.log // TODO: Delete in production mode
+    });
+
+    console.log('Locations found:', locations ? locations.length : 0);
+    return locations || [];
+  } catch (error) {
+    console.error('Error in getAllLocations:', error);
     throw error;
   }
 };
@@ -35,29 +56,17 @@ const updateLocation = async ({ merchant_id, latitude, longitude }) => {
   }
 };
 
-const getAllLocations = async () => {
-  try {
-    const locations = await Location.findAll({
-      include: [{
-        model: Merchant,
-        as: 'merchant'
-      }]
-    });
-    return locations;
-  } catch (error) {
-    throw error;
-  }
-};
-
 const getLocationByMerchantId = async (merchant_id) => {
   try {
     const location = await Location.findOne({
       where: { merchant_id },
       include: [{
         model: Merchant,
-        as: 'merchant'
+        as: 'merchant',
+        required: false
       }]
     });
+
     if (!location) throw new Error('Location not found');
     return location;
   } catch (error) {
@@ -67,7 +76,7 @@ const getLocationByMerchantId = async (merchant_id) => {
 
 module.exports = {
   createLocation,
-  updateLocation,
   getAllLocations,
+  updateLocation,
   getLocationByMerchantId
 };

@@ -1,42 +1,41 @@
-"use strict";
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/db.config");
+'use strict';
+const { Model } = require('sequelize');
 
-class Merchant extends Model {
-  static associate(models) {
-    this.hasMany(models.Location, {
-      foreignKey: 'merchant_id',
-      as: 'location'
-    });
+module.exports = (sequelize, DataTypes) => {
+  class Merchant extends Model {
+    static associate(models) {
+      Merchant.hasMany(models.Location, {
+        foreignKey: 'merchant_id',
+        sourceKey: 'merchant_id',
+        as: 'location'
+      });
+    }
   }
-}
 
-Merchant.init(
-  {
+  Merchant.init({
     merchant_id: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: true
     },
     business_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     average_rating: {
       type: DataTypes.FLOAT,
-      defaultValue: 0,
+      defaultValue: 0
     },
     status: {
       type: DataTypes.ENUM('active', 'inactive'),
-      defaultValue: 'active',
-    },
-  },
-  {
+      defaultValue: 'active'
+    }
+  }, {
     sequelize,
-    modelName: "Merchant",
-    tableName: "Merchants",
-    timestamps: true,
-  }
-);
+    modelName: 'Merchant',
+    tableName: 'Merchants',
+    underscored: true
+  });
 
-module.exports = Merchant;
+  return Merchant;
+};

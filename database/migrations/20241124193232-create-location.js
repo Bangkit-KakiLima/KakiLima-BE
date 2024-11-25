@@ -11,11 +11,13 @@ module.exports = {
       },
       merchant_id: {
         type: Sequelize.STRING,
+	unique: true,
         allowNull: false,
         references: {
           model: 'Merchants',
           key: 'merchant_id'
-        }
+        },
+	onDelete: 'CASCADE',
       },
       latitude: {
         type: Sequelize.TEXT,
@@ -27,11 +29,13 @@ module.exports = {
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },

@@ -1,18 +1,18 @@
-"use strict";
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/db.config");
+'use strict';
+const { Model } = require('sequelize');
 
-class Location extends Model {
-  static associate(models) {
-    this.belongsTo(models.Merchant, {
-      foreignKey: 'merchant_id',
-      as: 'merchant'
-    });
+module.exports = (sequelize, DataTypes) => {
+  class Location extends Model {
+    static associate(models) {
+      Location.belongsTo(models.Merchant, {
+        foreignKey: 'merchant_id',
+        targetKey: 'merchant_id',
+        as: 'merchant'
+      });
+    }
   }
-}
 
-Location.init(
-  {
+  Location.init({
     merchant_id: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,19 +23,18 @@ Location.init(
     },
     latitude: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: false
     },
     longitude: {
       type: DataTypes.TEXT,
-      allowNull: false,
-    },
-  },
-  {
+      allowNull: false
+    }
+  }, {
     sequelize,
-    modelName: "Location",
-    tableName: "Locations",
-    timestamps: true,
-  }
-);
+    modelName: 'Location',
+    tableName: 'Locations',
+    underscored: true
+  });
 
-module.exports = Location;
+  return Location;
+};
