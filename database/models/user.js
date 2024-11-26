@@ -6,8 +6,13 @@ module.exports = (sequelize) => {
     static associate(models) {
       // Define associations here
       // Example: this.hasMany(models.Post);
+      User.hasMany(models.Merchant, {
+        foreignKey: 'user_id',
+        as: 'merchants'
+      });
     }
   }
+
 
   User.init(
     {

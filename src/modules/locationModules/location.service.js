@@ -3,7 +3,7 @@ const { Location, Merchant } = db;
 
 const createLocation = async ({ merchant_id, latitude, longitude }) => {
   try {
-    const merchant = await Merchant.findOne({ where: { merchant_id } });
+    const merchant = await Merchant.findOne({ where: { id: merchant_id } });
     if (!merchant) throw new Error('Merchant not found');
 
     const location = await Location.create({

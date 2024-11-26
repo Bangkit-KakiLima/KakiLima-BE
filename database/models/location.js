@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Location.belongsTo(models.Merchant, {
         foreignKey: 'merchant_id',
-        targetKey: 'merchant_id',
         as: 'merchant'
       });
     }
@@ -14,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
 
   Location.init({
     merchant_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'Merchants',
-        key: 'merchant_id'
+        key: 'id'
       }
     },
     latitude: {

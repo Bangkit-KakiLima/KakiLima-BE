@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT;
 const db = require("./database/config/db.config");
 const router = require("./src/routes/routes"); //imported routes
+const { startCronJob } = require("./src/cron/cronJob");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -59,6 +60,7 @@ db.authenticate()
     app.listen(port, () => {
       console.log(`Server running on http://localhost:${port}`);
     });
+    startCronJob();
   })
   .catch((error) => {
     console.log(`Error: ${error.message}`);
