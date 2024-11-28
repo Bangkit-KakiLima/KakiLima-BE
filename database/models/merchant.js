@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       Merchant.hasMany(models.Product, {
         foreignKey: "merchant_id",
-        as: "product",
+        as: "merchant",
       });
     }
   }

@@ -5,10 +5,17 @@ const port = process.env.PORT;
 const db = require("./database/config/db.config");
 const router = require("./src/routes/routes"); //imported routes
 const { startCronJob } = require("./src/cron/cronJob");
+const path = require("path");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(router);
+app.use("/api", router);
+
+//static file
+app.use(
+  "/images",
+  express.static(path.resolve(__dirname, "./src/public/images"))
+);
 
 app.get("/", (req, res) => {
   res.send("Hello World");

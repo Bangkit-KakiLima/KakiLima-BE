@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       Product.belongsToMany(models.Category, {
         through: models.Product_Category_Mapping,
         foreignKey: "product_id",
+        as: "category",
       });
     }
   }
@@ -28,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       merchant_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Merchant",
+          key: "id",
+        },
       },
       description: {
         type: DataTypes.TEXT,
