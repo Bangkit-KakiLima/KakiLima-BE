@@ -69,9 +69,14 @@ const ResendOTP = async (req, res, next) => {
     res.status(200).send({
       success: true,
       message: "OTP is resent",
-      email: result.email,
-      result: result.otp_code,
-      otp_expiration: result.otp_expiration,
+      result: {
+        id: result.id,
+        username: result.username,
+        email: result.email,
+        otp_code: result.otp_code,
+        otp_expiration: result.otp_expiration,
+        is_verified: result.is_verified,
+      },
     });
   } catch (error) {
     console.log(error);
@@ -146,9 +151,11 @@ const Login = async (req, res, next) => {
             { id: user.id, email: user.email, username: user.username },
             process.env.JWT_SECRET
           );
-          res
-            .status(200)
-            .send({ success: true, message: "Login success", token: token });
+          res.status(200).send({
+            success: true,
+            message: "Login success",
+            result: { token: token },
+          });
         } else {
           res.status(400).send({
             success: false,
@@ -175,7 +182,9 @@ const LoggedUsers = async (req, res, next) => {
     const { id } = req.user;
     const user = await service.UserData({ id });
 
-    res.status(200).json({ success: true, message: "User found", user });
+    res
+      .status(200)
+      .json({ success: true, message: "User found", result: user });
   } catch (error) {
     console.error(error);
     next(error);
