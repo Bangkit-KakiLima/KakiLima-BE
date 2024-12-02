@@ -114,6 +114,35 @@ const GetProductById = async (req, res, next) => {
   }
 };
 
+const GetRecommendationProduct = async (req, res, next) => {
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+  try {
+    const products = await service.GetRecommendationProduct();
+    if (!products) {
+      res.status(404).send({
+        success: false,
+        message: "Failed to retrieve recommendation products",
+      });
+    }
+    const modifiedProducts = products.map((product) => {
+      return {
+        ...product.toJSON(),
+        image: product.image
+          ? `${baseUrl}/images/products/${product.image}`
+          : null,
+      };
+    });
+    res.status(200).send({
+      success: true,
+      message: "All recommendation products retrieved successfully",
+      data: modifiedProducts,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
 const UpdateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -184,4 +213,5 @@ module.exports = {
   GetProductById,
   UpdateProduct,
   DeleteProduct,
+  GetRecommendationProduct,
 };

@@ -177,10 +177,41 @@ const DeleteProduct = async (productId) => {
   }
 };
 
+const GetRecommendationProduct = async () => {
+  try {
+    const products = await Product.findAll({
+      include: [
+        {
+          model: Merchant,
+          as: "merchant",
+          attributes: [
+            "id",
+            "user_id",
+            "business_name",
+            "average_rating",
+            "status",
+          ],
+        },
+        {
+          model: Category,
+          as: "category",
+          attributes: ["id", "name"],
+        },
+      ],
+      order: [[{ model: Merchant, as: "merchant" }, "average_rating", "DESC"]],
+    });
+    return products;
+  } catch (error) {
+    console.error(`Failed to retrieve products: ${error.message}`);
+    return new Error(`Failed to retrieve products: ${error.message}`);
+  }
+};
+
 module.exports = {
   CreateProduct,
   GetAllProduct,
   GetProductById,
   UpdateProduct,
   DeleteProduct,
+  GetRecommendationProduct,
 };

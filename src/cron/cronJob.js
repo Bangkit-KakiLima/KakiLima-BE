@@ -3,7 +3,7 @@ const axios = require("axios");
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  user: process.env.DB_USER,
+  user: process.env.DB_USERNAME,
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
@@ -26,7 +26,9 @@ function generateRandomCoordinates() {
   const radius = 0.1; // ~10 km radius dr pusat bndung
 
   const latOffset = (Math.random() - 0.5) * 2 * radius;
-  const lngOffset = (Math.random() - 0.5) * 2 * radius / Math.cos(centerLat * Math.PI / 180);
+  const lngOffset =
+    ((Math.random() - 0.5) * 2 * radius) /
+    Math.cos((centerLat * Math.PI) / 180);
 
   const latitude = centerLat + latOffset;
   const longitude = centerLng + lngOffset;
@@ -36,7 +38,7 @@ function generateRandomCoordinates() {
 
 async function updateLocation(id, latitude, longitude) {
   try {
-    const apiUrl = `http://13.229.216.9:80/api/locations/${id}`; //TODO: Change with your instance or localhost hehe
+    const apiUrl = `http://localhost:3000/api/locations/${id}`; //TODO: Change with your instance or localhost hehe
     const response = await axios.put(
       apiUrl,
       {
@@ -50,13 +52,14 @@ async function updateLocation(id, latitude, longitude) {
       }
     );
 
-    console.log(`Updated ID ${id} to Latitude: ${latitude}, Longitude: ${longitude}`);
+    console.log(
+      `Updated ID ${id} to Latitude: ${latitude}, Longitude: ${longitude}`
+    );
     console.log("API Response:", response.data);
   } catch (error) {
     console.error(`Error updating location for ID ${id}:`, error.message);
   }
 }
-
 
 function startCronJob() {
   cron.schedule("*/20 * * * *", async () => {

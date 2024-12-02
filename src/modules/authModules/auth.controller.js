@@ -145,6 +145,12 @@ const Login = async (req, res, next) => {
     } else {
       var user = EmailExists;
       if (user) {
+        if (!user.is_verified) {
+          res.status(401).send({
+            success: false,
+            message: "Failed to Log in, please verify you account first",
+          });
+        }
         var ComparePassword = await bcrypt.compare(password, user.password);
         if (ComparePassword) {
           var token = jwt.sign(
