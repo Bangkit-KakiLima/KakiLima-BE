@@ -1,6 +1,7 @@
 const cron = require("node-cron");
 const axios = require("axios");
 const { Pool } = require("pg");
+const merchantService = require("../modules/merchantModules/merchant.service");
 
 const pool = new Pool({
   user: process.env.DB_USERNAME,
@@ -74,6 +75,19 @@ function startCronJob() {
     const { latitude, longitude } = generateRandomCoordinates();
     await updateLocation(selectedId, latitude, longitude);
     console.log("Cron job completed at:", new Date().toISOString());
+  });
+
+  // New cron job to update merchant statuses every 3 hour
+  cron.schedule("0 */3 * * *", async () => {
+    console.log(
+      "Merchant status cron job started at:",
+      new Date().toISOString()
+    );
+    await merchantService.updateAllMerchantStatus();
+    console.log(
+      "Merchant status cron job completed at:",
+      new Date().toISOString()
+    );
   });
   console.log("Cron job scheduled.");
 }

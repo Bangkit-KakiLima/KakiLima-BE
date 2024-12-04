@@ -39,8 +39,16 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
       },
       status: {
-        type: DataTypes.ENUM("active", "inactive"),
-        defaultValue: "active",
+        type: DataTypes.ENUM("buka", "tutup"),
+        defaultValue: "buka",
+      },
+      opening_time: {
+        type: DataTypes.TIME,
+        allowNull: false,
+      },
+      closing_time: {
+        type: DataTypes.TIME,
+        allowNull: false,
       },
     },
     {

@@ -1,45 +1,135 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:*/
-     await queryInterface.bulkInsert('Users', [
-       {
-	username: 'seller1',
-        email: 'seller1@example.com',
-        password: 'password1',
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("Users", [
+      // Sellers
+      {
+        username: "john_doe",
+        email: "john.doe@example.com",
+        password: "password1",
         otp_code: null,
         otp_expiration: null,
         is_verified: true,
-        address: 'Jl. Braga, Bandung',
-        role: 'seller',
+        address: "Jl. Sudirman, Bandung",
+        role: "seller",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        username: 'buyer1',
-        email: 'buyer1@example.com',
-        password: 'password2',
+        username: "jane_smith",
+        email: "jane.smith@example.com",
+        password: "password2",
+        otp_code: null,
+        otp_expiration: null,
+        is_verified: true,
+        address: "Jl. Merdeka, Bandung",
+        role: "seller",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        username: "adam_wilson",
+        email: "adam.wilson@example.com",
+        password: "password3",
+        otp_code: null,
+        otp_expiration: null,
+        is_verified: true,
+        address: "Jl. Dago, Bandung",
+        role: "seller",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        username: "laura_taylor",
+        email: "laura.taylor@example.com",
+        password: "password4",
+        otp_code: null,
+        otp_expiration: null,
+        is_verified: true,
+        address: "Jl. Setiabudi, Bandung",
+        role: "seller",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        username: "michael_brown",
+        email: "michael.brown@example.com",
+        password: "password5",
+        otp_code: null,
+        otp_expiration: null,
+        is_verified: true,
+        address: "Jl. Braga, Bandung",
+        role: "seller",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      // Buyers
+      {
+        username: "emily_johnson",
+        email: "emily.johnson@example.com",
+        password: "password6",
         otp_code: null,
         otp_expiration: null,
         is_verified: false,
-        address: 'Jl. Asia Afrika, Bandung',
-        role: 'buyer',
+        address: "Jl. Asia Afrika, Bandung",
+        role: "buyer",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        username: "chris_lee",
+        email: "chris.lee@example.com",
+        password: "password7",
+        otp_code: null,
+        otp_expiration: null,
+        is_verified: false,
+        address: "Jl. Pasteur, Bandung",
+        role: "buyer",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        username: "sophia_martin",
+        email: "sophia.martin@example.com",
+        password: "password8",
+        otp_code: null,
+        otp_expiration: null,
+        is_verified: false,
+        address: "Jl. Cihampelas, Bandung",
+        role: "buyer",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        username: "daniel_white",
+        email: "daniel.white@example.com",
+        password: "password9",
+        otp_code: null,
+        otp_expiration: null,
+        is_verified: false,
+        address: "Jl. Gatot Subroto, Bandung",
+        role: "buyer",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        username: "olivia_jones",
+        email: "olivia.jones@example.com",
+        password: "password10",
+        otp_code: null,
+        otp_expiration: null,
+        is_verified: false,
+        address: "Jl. Riau, Bandung",
+        role: "buyer",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     ]);
   },
 
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:*/
-     await queryInterface.bulkDelete('Users', null, {});
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("Users", null, {});
+  },
 };
