@@ -39,8 +39,14 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
       },
       status: {
-        type: DataTypes.ENUM("buka", "tutup"),
-        defaultValue: "buka",
+        type: DataTypes.STRING(10),
+        allowNull: false,
+        validate: {
+          isIn: {
+            args: [["buka", "tutup"]],
+            msg: "Status must be either 'buka' or 'tutup'",
+          },
+        },
       },
       opening_time: {
         type: DataTypes.TIME,

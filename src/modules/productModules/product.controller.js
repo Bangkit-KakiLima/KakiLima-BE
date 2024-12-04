@@ -207,6 +207,18 @@ const DeleteProduct = async (req, res, next) => {
   }
 };
 
+const ExportToCSV = async (req, res) => {
+  try {
+    const csvData = await service.ExportToCSV();
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", "attachment; filename=products.csv");
+
+    res.status(200).send(csvData);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   CreateProduct,
   GetAllProducts,
@@ -214,4 +226,5 @@ module.exports = {
   UpdateProduct,
   DeleteProduct,
   GetRecommendationProduct,
+  ExportToCSV,
 };

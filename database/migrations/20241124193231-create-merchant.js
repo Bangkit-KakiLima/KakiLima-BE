@@ -28,8 +28,9 @@ module.exports = {
         defaultValue: 0,
       },
       status: {
-        type: Sequelize.ENUM("buka", "tutup"),
-        defaultValue: "buka",
+        type: Sequelize.STRING(10), // Ubah menjadi STRING
+        allowNull: false,
+        defaultValue: "buka", // Default value
       },
       opening_time: {
         type: Sequelize.TIME,

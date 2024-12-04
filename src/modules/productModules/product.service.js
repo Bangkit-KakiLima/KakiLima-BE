@@ -2,6 +2,8 @@ const { where } = require("sequelize");
 const db = require("../../../database/models");
 const fs = require("fs");
 const path = require("path");
+const { parse } = require("json2csv");
+const { raw } = require("express");
 const { Product, Product_Category_Mapping, Merchant, Category } = db;
 
 const CreateProduct = async (data, categoryIds, imagePath) => {
@@ -199,12 +201,38 @@ const GetRecommendationProduct = async () => {
         },
       ],
       order: [[{ model: Merchant, as: "merchant" }, "average_rating", "DESC"]],
+      limit: 5,
     });
     return products;
   } catch (error) {
     console.error(`Failed to retrieve products: ${error.message}`);
     return new Error(`Failed to retrieve products: ${error.message}`);
   }
+};
+
+const ExportToCSV = async () => {
+  const products = await Product.findAll({
+    raw: true,
+  });
+
+  if (products.length === 0) {
+    throw new Error("No products found");
+  }
+
+  const fields = [
+    "id",
+    "merchant_id",
+    "name",
+    "description",
+    "price",
+    "image",
+    "createdAt",
+    "updatedAt",
+  ];
+  const opts = { fields };
+  const csv = parse(products, opts);
+
+  return csv;
 };
 
 module.exports = {
@@ -214,4 +242,5 @@ module.exports = {
   UpdateProduct,
   DeleteProduct,
   GetRecommendationProduct,
+  ExportToCSV,
 };
