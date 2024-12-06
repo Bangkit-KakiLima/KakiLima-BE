@@ -235,6 +235,35 @@ const ExportToCSV = async () => {
   return csv;
 };
 
+const GetProductsByCategoryName = async (categoryName) => {
+  try {
+    const products = Product.findAll({
+      include: [
+        {
+          model: Merchant,
+          as: "merchant",
+          attributes: [
+            "id",
+            "user_id",
+            "business_name",
+            "average_rating",
+            "status",
+          ],
+        },
+        {
+          model: Category,
+          as: "category",
+          where: { name: categoryName },
+          attributes: ["id", "name"],
+        },
+      ],
+    });
+    return products;
+  } catch (error) {
+    throw new Error(`Failed to retrieve products: ${error.message}`);
+  }
+};
+
 module.exports = {
   CreateProduct,
   GetAllProduct,
@@ -243,4 +272,5 @@ module.exports = {
   DeleteProduct,
   GetRecommendationProduct,
   ExportToCSV,
+  GetProductsByCategoryName,
 };

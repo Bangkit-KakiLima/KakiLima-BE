@@ -219,6 +219,38 @@ const ExportToCSV = async (req, res) => {
   }
 };
 
+const GetProductsByCategoryName = async (req, res) => {
+  try {
+    const { categoryName } = req.params;
+    if (!categoryName || typeof categoryName !== "string") {
+      return res.status(400).json({
+        success: false,
+        message: "invalid category name",
+      });
+    }
+
+    const products = await service.GetProductsByCategoryName(categoryName);
+
+    if (!products || products.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Products retrieved successfully",
+      data: products,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: `Failed to retrieve products : ${error.message}`,
+    });
+  }
+};
+
 module.exports = {
   CreateProduct,
   GetAllProducts,
@@ -227,4 +259,5 @@ module.exports = {
   DeleteProduct,
   GetRecommendationProduct,
   ExportToCSV,
+  GetProductsByCategoryName,
 };

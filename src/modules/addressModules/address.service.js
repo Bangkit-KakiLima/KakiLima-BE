@@ -3,10 +3,11 @@ const { Address, Weather, User } = require("../../../database/models");
 const { format } = require("sequelize/lib/utils");
 const { parse } = require("dotenv");
 const { where } = require("sequelize");
+require("dotenv").config();
 
 const NOMINATIM_URL = "https://nominatim.openstreetmap.org/search";
 const OPENWEATHERMAP_URL = "https://api.openweathermap.org/data/2.5/weather";
-const OPENWEATHERMAP_API_KEY = "a76862482261a2dab25b692e5882999e";
+const OPENWEATHERMAP_API_KEY = process.env.OPENWEATHERMAP_API_KEY;
 
 const createAddress = async (userId, addressName) => {
   const geocodeResponse = await axios.get(NOMINATIM_URL, {
