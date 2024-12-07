@@ -118,6 +118,11 @@ const fetchWeathers = async (userId) => {
   const { main, description } = weatherResponse.data.weather[0];
 
   let weather = await Weather.findOne({
+    include: [
+      {
+        model: Address,
+      },
+    ],
     where: { address_id: address.id },
   });
 
