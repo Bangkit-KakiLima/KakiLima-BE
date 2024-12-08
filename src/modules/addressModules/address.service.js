@@ -44,6 +44,32 @@ const createAddress = async (userId, addressName) => {
   return address;
 };
 
+const createCurrentUserLocation = async (userId, lat, lon) => {
+  try {
+    let address = await Address.findOne({
+      where: { user_id: userId },
+    });
+
+    if (address) {
+      address.address_name = null;
+      address.latitude = parseFloat(lat);
+      address.longitude = parseFloat(lon);
+      await address.save();
+    } else {
+      address = await Address.create({
+        user_id: userId,
+        latitude: parseFloat(lat),
+        longitude: parseFloat(lon),
+      });
+    }
+
+    return address;
+  } catch (error) {
+    console.error("Error updating/creating address:", error.message);
+    throw error;
+  }
+};
+
 const getAddressByUserId = async (userId) => {
   return await Address.findOne({
     where: { user_id: userId },
@@ -149,4 +175,5 @@ module.exports = {
   updateAddress,
   deleteAddress,
   fetchWeathers,
+  createCurrentUserLocation,
 };

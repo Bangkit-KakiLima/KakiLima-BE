@@ -19,6 +19,35 @@ const CreateAddress = async (req, res) => {
   }
 };
 
+const CreateCurrentLocation = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { lat, lon } = req.body;
+
+    if (!userId || !lat || !lon) {
+      return res.status(400).json({
+        success: false,
+        message: "userId, latitude, and longitude are required",
+      });
+    }
+
+    const Location = await service.createCurrentUserLocation(userId, lat, lon);
+
+    return res.status(200).json({
+      success: true,
+      message: "Location updated successfully",
+      data: Location,
+    });
+  } catch (error) {
+    console.error("Error in CreateCurrentLocation:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while updating the location",
+      error: error.message,
+    });
+  }
+};
+
 const GetAddressByUserId = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -29,13 +58,11 @@ const GetAddressByUserId = async (req, res) => {
       data: address,
     });
   } catch (error) {
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: "User's address is not success",
-        error: error.message,
-      });
+    res.status(400).json({
+      success: false,
+      message: "User's address is not success",
+      error: error.message,
+    });
   }
 };
 
@@ -90,4 +117,5 @@ module.exports = {
   UpdateAddress,
   DeleteAddress,
   getWeather,
+  CreateCurrentLocation,
 };
