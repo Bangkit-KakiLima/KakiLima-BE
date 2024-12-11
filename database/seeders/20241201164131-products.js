@@ -140,7 +140,7 @@ module.exports = {
         description:
           "Pisang yang dibungkus adonan tepung, digoreng garing, dan disajikan hangat",
         price: 15000.0,
-        image: "PisanMolen.jpg", // URL gambar
+        image: "PisangMolen.jpg", // URL gambar
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -149,7 +149,7 @@ module.exports = {
         merchant_id: 15,
         description: "Kue berlapis yang lembut dan manis",
         price: 25000.0,
-        image: "KueLapisLegit.jpg", // URL gambar
+        image: "KueLapis.jpg", // URL gambar
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -195,7 +195,7 @@ module.exports = {
         merchant_id: 20,
         description: "Roti Bakar dengan Berbagai Toping",
         price: 15000.0,
-        image: "RotiBakar.jpg", // URL gambar
+        image: "RotiBakarr.jpg", // URL gambar
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -356,7 +356,7 @@ module.exports = {
         description:
           "Pisang Goreng yang dibalut dengan toping roti lalu dioles dengan berbagai Toping",
         price: 12000.0,
-        image: "PisangCrispy.jpg", // URL gambar
+        image: "PisangCrisp.jpg", // URL gambar
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -385,7 +385,7 @@ module.exports = {
         description:
           "Cemilan yang mempunyai ciri khas kulit renyah di luar dan isian krim manis di dalam",
         price: 5000.0,
-        image: "DadarGulung.jpg", // URL gambar
+        image: "KueSus.jpg", // URL gambar
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -433,7 +433,7 @@ module.exports = {
         merchant_id: 45,
         description: "Buah Buahan yang dibekukan lalu dilumuri coklat",
         price: 5000.0,
-        image: "EsKulKul.jpg", // URL gambar
+        image: "EsKulkul.jpg", // URL gambar
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -442,7 +442,7 @@ module.exports = {
         merchant_id: 46,
         description: "Kacang tanah rebus yang gurih, cocok untuk camilan sore",
         price: 5000.0,
-        image: "KacangRebus.jpg", // URL gambar
+        image: "KacangRebuss.jpg", // URL gambar
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -460,7 +460,7 @@ module.exports = {
         merchant_id: 48,
         description: "Bubur Ayam Khas Bandung",
         price: 10000.0,
-        image: "BuburAyam.jpg", // URL gambar
+        image: "BuburAyamm.jpg", // URL gambar
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -555,7 +555,7 @@ module.exports = {
         merchant_id: 58,
         description: "Nasi gurih khas Solo dengan lauk lengkap.",
         price: 25000.0,
-        image: "NasiLiwet.jpg",
+        image: "NasiLiwett.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -606,11 +606,12 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        name: "Rendang",
+        name: "Sosis Bakar",
         merchant_id: 64,
-        description: "Daging sapi empuk dengan bumbu rempah khas Padang.",
-        price: 30000.0,
-        image: "Rendang.jpg",
+        description:
+          "Daging sapi dan Daging ayam yang dipadatkan lalu di bakar",
+        price: 10000.0,
+        image: "SosisBakar.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -656,7 +657,7 @@ module.exports = {
         merchant_id: 69,
         description: "Sup khas Jawa Timur dengan kuah hitam dari kluwek.",
         price: 25000.0,
-        image: "Rawon.jpg",
+        image: "Rawonn.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -697,11 +698,11 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        name: "Es Susu Jahe",
+        name: "Susu Jahe",
         merchant_id: 74,
-        description: "Minuman susu segar dengan jahe hangat.",
+        description: "Minuman susu dengan jahe hangat.",
         price: 15000.0,
-        image: "EsSusuJahe.jpg",
+        image: "SusuJahee.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -826,11 +827,12 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        name: "Pisang Goreng Keju",
+        name: "Pentol",
         merchant_id: 88,
-        description: "Pisang goreng dengan taburan keju dan cokelat.",
-        price: 10000.0,
-        image: "PisangGorengKeju.jpg",
+        description:
+          "Bola daging giling yang dicampur tepung tapioka, biasanya disajikan dengan sambal atau saus kacang.",
+        price: 5000.0,
+        image: "PentolMercon.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
