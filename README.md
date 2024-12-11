@@ -71,32 +71,32 @@ Backend untuk aplikasi tracking penjual kaki lima keliling. Proyek ini dikembang
    npm start
    ```
 
-3. Server akan berjalan di `http://localhost:5000` secara default.
+3. Server akan berjalan di `http://localhost:3000` secara default.
 
 ## Struktur Proyek
 
 ```
 kakilima-be/
 ├── database/
-│   ├── config/        # Konfigurasi database Sequelize
-│   ├── migrations/    # File migrasi database
-│   ├── models/        # Definisi model Sequelize
-│   ├── seeders/       # Data awal untuk database
+│   ├── config/        
+│   ├── migrations/   
+│   ├── models/       
+│   ├── seeders/       
 ├── src/
-│   ├── cron/          # Penjadwalan tugas
-│   ├── modules/       # Modul fitur aplikasi
+│   ├── cron/         
+│   ├── modules/      
 │   │   ├── addressModules/
 │   │   ├── authModules/
 │   │   ├── locationModules/
 │   │   ├── merchantModules/
 │   │   └── productModules/
-│   ├── public/        # File statis (jika diperlukan)
-│   ├── routes/        # Definisi endpoint API
-│   └── utils/         # Fungsi utilitas umum
-├── .env               # Variabel lingkungan
-├── Dockerfile         # File Docker untuk container
-├── package.json       # File konfigurasi npm
-├── server.js          # Entry point aplikasi
+│   ├── public/        
+│   ├── routes/        
+│   └── utils/         
+├── .env              
+├── Dockerfile         
+├── package.json       
+├── server.js         
 ```
 
 ## API Endpoint
