@@ -12,14 +12,16 @@ Backend untuk aplikasi tracking penjual kaki lima keliling. Proyek ini dikembang
 - [Struktur Proyek](#struktur-proyek)
 - [API Endpoint](#api-endpoint)
 - [Kontribusi](#kontribusi)
-- [Lisensi](#lisensi)
 
 ## Fitur
 
 - **Location Tracking**: Mengelola data lokasi pedagang secara real-time.
-- **Manajemen Status Pedagang**: Mengatur status pedagang (aktif/non-aktif).
 - **Pencarian Pedagang**: Pencarian berdasarkan lokasi dan produk yang dijual.
 - **Pencarian Produk**: Pencarian produk yang dijual.
+- **Lokasi Pedagang Produk**: Fitur untuk melihat lokasi pedagang dan produk
+- **Manajemen Profil**: Pengguna dapat mengelola akun mereka.
+- **Live Weather Based On Location**: Pengguna dapat mengelola akun mereka.
+- **Product Recommendation Based on Weather**: Pengguna dapat mengelola akun mereka.
 
 ## Persyaratan Sistem
 
