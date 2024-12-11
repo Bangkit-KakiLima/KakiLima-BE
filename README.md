@@ -1,41 +1,43 @@
-# Backend KakiLima
+# PING! - Kaki Lima Tracking App - Cloud Computing 
+## Bangkit Capstone Project 2024
+Bangkit Capstone Team ID: C242-PS123
+Here is our repository for the Bangkit 2024 Capstone project - Cloud Computing
+## Description
+Cloud Computing have responsibilities for creating and managing APIs, databases and servers. We also provides needed by the Mobile Development and Machine Learning divisions. So that the features we have designed in this mobile application, the data and information entered by users, such as names, emails, images, etc can be properly used, stored and maintained.
 
-Backend untuk aplikasi tracking penjual kaki lima keliling. Proyek ini dikembangkan menggunakan Node.js dengan arsitektur RESTful API dan menggunakan PostgreSQL sebagai database. Backend ini mendukung fitur utama seperti manajemen lokasi, pemesanan, dan pengelolaan data pedagang.
+## Cloud Development Schedule
+| Task  | Week 1 | Week 2 | Week 3 |
+| -------- | ------------- | --------- | ------- | 
+| Task 1| Research services that needed for app features| Build API | Deploy BE Server to GCP |
+| Task 2| Create ERD and research services that needed for app features| Debug API services | API testing and evaluation |
 
-## Daftar Isi
+## System Requirements
 
-- [Fitur](#fitur)
-- [Persyaratan Sistem](#persyaratan-sistem)
-- [Instalasi](#instalasi)
-- [Konfigurasi](#konfigurasi)
-- [Menjalankan Aplikasi](#menjalankan-aplikasi)
-- [Struktur Proyek](#struktur-proyek)
-- [API Endpoint](#api-endpoint)
-- [Kontribusi](#kontribusi)
+- Node.js v16
+- Express.js
+- NPM v8
+- PostgreSQL
+- Sequelize
+- OpenStreetMap
+- OpenWeatherMap
+- Google Cloud Platform
 
-## Fitur
+## Cloud Architecture
+![Cloud Architecture](https://github.com/user-attachments/assets/380e82c6-2e20-45c9-99b9-9c884ad5a138)
+On this project, we utilize google cloud platform products to create robust and fully maintained system. Products that we chose are compute engine as backend server, cloud sql for database server, cloud storage for backup sql data, and cloud run to host Machine Learning service.
 
-- **Location Tracking**: Mengelola data lokasi pedagang secara real-time.
-- **Pencarian Pedagang**: Pencarian berdasarkan lokasi dan produk yang dijual.
-- **Pencarian Produk**: Pencarian produk yang dijual.
-- **Lokasi Pedagang Produk**: Fitur untuk melihat lokasi pedagang dan produk
-- **Manajemen Profil**: Pengguna dapat mengelola akun mereka.
-- **Live Weather Based On Location**: Pengguna dapat mengelola akun mereka.
-- **Product Recommendation Based on Weather**: Pengguna dapat mengelola akun mereka.
+## Entity Relationship Diagram
+![Bangkit ERD](https://github.com/user-attachments/assets/508820ed-122f-4996-97b8-add6ec500cd9)
+We created ERD design before we start to work on the API development. It helps us to plan and create the system that needs to be stored and to be show within the application needs.
 
-## Persyaratan Sistem
 
-- Node.js v16 atau lebih baru
-- NPM v8 atau lebih baru
-- PostgreSQL sebagai database
-- Sequelize sebagai ORM
 
 ## Instalasi
 
 1. Clone repository ini:
    ```bash
-   git clone https://github.com/username/backend-kakilima.git
-   cd backend-kakilima
+   git clone https://github.com/Bangkit-KakiLima/KakiLima-BE.git
+   cd KakiLima-BE
    ```
 
 2. Install dependencies:
@@ -43,11 +45,11 @@ Backend untuk aplikasi tracking penjual kaki lima keliling. Proyek ini dikembang
    npm install
    ```
 
-3. Pastikan PostgreSQL berjalan di sistem Anda.
+3. Make sure PostgreSQL is running on your device.
+   
+## Configuration
 
-## Konfigurasi
-
-1. Buat file `.env` di root proyek dengan variabel berikut:
+1. Make `.env` file in root project with these variables:
 
    ```env
    PORT=3000
@@ -59,59 +61,27 @@ Backend untuk aplikasi tracking penjual kaki lima keliling. Proyek ini dikembang
    JWT_SECRET=your_jwt_secret_key
    ```
 
-2. Sesuaikan konfigurasi dengan kebutuhan Anda.
+2. Adjust configuration based on your need.
 
-## Menjalankan Aplikasi
+## Run the application
 
-1. Untuk menjalankan server dalam mode pengembangan:
+1. Run server in development mode:
    ```bash
    npm run dev
    ```
 
-2. Untuk menjalankan server dalam mode produksi:
+2. Run server in production mode:
    ```bash
    npm start
    ```
 
-3. Server akan berjalan di `http://localhost:3000` secara default.
+3. Server will run at `http://localhost:3000` by default.
 
-## Struktur Proyek
+# API Documentation
+## Ping! Endpoint Documentation
+[Ping! Endpoint Documentation](https://documenter.getpostman.com/view/33474817/2sAYHwJjzT)
+## OpenStreetMap Documentation
+[OpenStreetMap Documentation](https://wiki.openstreetmap.org/wiki/API_v0.6)
+## OpenWeatherMap Documentation
+[OpenWeatherMap Documentation](https://openweathermap.org/api)
 
-```
-kakilima-be/
-├── database/
-│   ├── config/        
-│   ├── migrations/   
-│   ├── models/       
-│   ├── seeders/       
-├── src/
-│   ├── cron/         
-│   ├── modules/      
-│   │   ├── addressModules/
-│   │   ├── authModules/
-│   │   ├── locationModules/
-│   │   ├── merchantModules/
-│   │   └── productModules/
-│   ├── public/        
-│   ├── routes/        
-│   └── utils/         
-├── .env              
-├── Dockerfile         
-├── package.json       
-├── server.js         
-```
-
-## API Endpoint
-
-Untuk melihat API Endpoint lengkap, dapat mengakses pada POSTMAN di bawah ini
-https://galactic-crater-815988.postman.co/workspace/New-Team-Workspace~89aec457-5d6c-4464-bd7e-53540fa36d6b/collection/33474817-e95c30f5-c24a-4438-9c28-5b03b44fa635?action=share&creator=33474817&active-environment=33474817-4dda2a44-4e23-4234-8ee5-7b04b52c5e02
-
-## Kontribusi
-
-Kontribusi sangat dihargai! Untuk berkontribusi:
-
-1. Fork repositori ini.
-2. Buat branch fitur baru: `git checkout -b feature-anda`
-3. Commit perubahan Anda: `git commit -m 'Menambahkan fitur tertentu'`
-4. Push ke branch: `git push origin feature-anda`
-5. Ajukan Pull Request.
