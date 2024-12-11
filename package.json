@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
-    "migrate": "npx sequelize-cli db:migrate --config database/config/config.json --migrations-path database/migrations",
-    "migrate:fresh": "cd database sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

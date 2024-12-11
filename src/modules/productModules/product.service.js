@@ -4,7 +4,18 @@ const fs = require("fs");
 const path = require("path");
 const { parse } = require("json2csv");
 const { raw } = require("express");
-const { Product, Product_Category_Mapping, Merchant, Category } = db;
+const { default: axios } = require("axios");
+const {
+  Product,
+  Product_Category_Mapping,
+  Merchant,
+  Category,
+  Weather,
+  Address,
+} = db;
+require("dotenv").config();
+const ML_URL =
+  "https://kakilima-ml-741985344530.asia-southeast2.run.app/recommend";
 
 const CreateProduct = async (data, categoryIds, imagePath) => {
   const { name, description, price, merchant_id } = data;
@@ -264,6 +275,70 @@ const GetProductsByCategoryName = async (categoryName) => {
   }
 };
 
+const MachineLearningRecommendation = async (user_id) => {
+  try {
+    const weather = await Weather.findOne({
+      include: [
+        {
+          model: Address,
+          where: {
+            user_id: user_id,
+          },
+          required: true,
+        },
+      ],
+    });
+
+    request_body = {
+      user_id: user_id,
+      weather_main: weather.weather_main,
+      temp_min: weather.temperature,
+      temp_max: weather.temperature,
+    };
+
+    const result = await axios.post(ML_URL, request_body);
+    data = result.data.recommendations;
+
+    const products = [];
+
+    for (const rec of data) {
+      const product = await Product.findOne({
+        where: { id: rec.id },
+        include: [
+          {
+            model: Merchant,
+            as: "merchant",
+            attributes: [
+              "id",
+              "user_id",
+              "business_name",
+              "average_rating",
+              "status",
+            ],
+          },
+          {
+            model: Category,
+            as: "category",
+            attributes: ["id", "name"],
+          },
+        ],
+      });
+
+      if (product) {
+        products.push(product);
+      }
+    }
+
+    return products;
+  } catch (error) {
+    console.error(
+      "Error in MachineLearningRecommendation:",
+      error.response?.data || error.message
+    );
+    throw new Error("Failed to fetch recommendations from ML service");
+  }
+};
+
 module.exports = {
   CreateProduct,
   GetAllProduct,
@@ -273,4 +348,5 @@ module.exports = {
   GetRecommendationProduct,
   ExportToCSV,
   GetProductsByCategoryName,
+  MachineLearningRecommendation,
 };

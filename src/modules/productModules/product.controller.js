@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const service = require("./product.service");
 
 const CreateProduct = async (req, res, next) => {
@@ -251,6 +252,36 @@ const GetProductsByCategoryName = async (req, res) => {
   }
 };
 
+const MachineLearningRecommendationController = async (req, res) => {
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+  try {
+    const user_id = req.user.id;
+    const products = await service.MachineLearningRecommendation(user_id);
+    if (!products) {
+      res.status(404).send({
+        success: false,
+        message: "Failed to retrieve ML recommendation products",
+      });
+    }
+    const modifiedProducts = products.map((product) => {
+      return {
+        ...product.toJSON(),
+        image: product.image
+          ? `${baseUrl}/images/products/${product.image}`
+          : null,
+      };
+    });
+    res.status(200).send({
+      success: true,
+      message: "ML recommendation products retrieved successfully",
+      data: modifiedProducts,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    console.error(error);
+  }
+};
+
 module.exports = {
   CreateProduct,
   GetAllProducts,
@@ -260,4 +291,5 @@ module.exports = {
   GetRecommendationProduct,
   ExportToCSV,
   GetProductsByCategoryName,
+  MachineLearningRecommendationController,
 };

@@ -63,7 +63,7 @@ async function updateLocation(id, latitude, longitude) {
 }
 
 function startCronJob() {
-  cron.schedule("*/5 * * * *", async () => {
+  cron.schedule("*/7 * * * *", async () => {
     console.log("Cron job started at:", new Date().toISOString());
     const merchantIds = await fetchMerchantIds();
     if (merchantIds.length === 0) {

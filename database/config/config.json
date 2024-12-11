@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "postgres",
-    "password": "Fadhlur@2002",
+    "password": "kakilima",
     "database": "KakiLima-BE",
-    "host": "127.0.0.1",
+    "host": "34.101.255.149",
     "dialect": "postgres"
   },
   "test": {
